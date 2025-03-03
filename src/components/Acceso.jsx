@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import { verificarUsuario } from "../utils/dummy_data"; // Importamos el utilitario
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { verificarUsuario } from "../utils/dummy_data";
+import { useAuth } from "../context/AuthContext";
 
-const SistemaIngreso = ({ setIsIngreso, setIsLogged }) => {
+const SistemaIngreso = () => {
   const [legajo, setLegajo] = useState("");
   const [password, setPassword] = useState("");
-  const [step, setStep] = useState(1); // 1: Pedir legajo, 2: Pedir contraseña
+  const [step, setStep] = useState(1); // Paso actual: 1 para legajo, 2 para contraseña
   const [mensaje, setMensaje] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  // Función para agregar números
+  // Redirige a /alertas si ya está logueado
+  useEffect(() => {
+    if (localStorage.getItem("isLogged") === "true") {
+      navigate("/alertas");
+    }
+  }, [navigate]);
+
   const handleButtonClick = (value) => {
+    // Actualiza el legajo o contraseña dependiendo del paso actual
     if (step === 1) {
       setLegajo((prev) => prev + value);
     } else {
@@ -16,8 +27,8 @@ const SistemaIngreso = ({ setIsIngreso, setIsLogged }) => {
     }
   };
 
-  // Función para retroceder en la entrada de números
   const handleBackspace = () => {
+    // Elimina el último carácter de legajo o contraseña dependiendo del paso actual
     if (step === 1) {
       setLegajo((prev) => prev.slice(0, -1));
     } else {
@@ -25,38 +36,34 @@ const SistemaIngreso = ({ setIsIngreso, setIsLogged }) => {
     }
   };
 
-  // Validar legajo y pasar a la pantalla de contraseña
   const handleLegajoSubmit = () => {
     if (legajo.trim() !== "") {
-      setStep(2);
-      setMensaje("Ingrese su contraseña");
+      setStep(2); // Si legajo es válido, pasamos al paso de contraseña
     } else {
       setMensaje("Por favor, ingrese un legajo válido.");
     }
   };
 
-  // Validar contraseña y verificar acceso
   const handlePasswordSubmit = () => {
     const usuarioNombre = verificarUsuario(legajo, password);
+
     if (usuarioNombre) {
+      login(usuarioNombre); // Guarda el nombre de usuario en el contexto
+      navigate("/alertas"); // Redirige a /alertas después del login exitoso
       alert(`Ingreso exitoso. Bienvenido, ${usuarioNombre}`);
-      setMensaje("");
-      setIsLogged(true);
-      setIsIngreso(false);
     } else {
-      alert("Legajo o contraseña incorrectos.");
+      setMensaje("Legajo o contraseña incorrectos.");
       setLegajo("");
       setPassword("");
-      setStep(1);
+      setStep(1); // Resetea el proceso de ingreso
     }
   };
 
-  // Función para borrar todo el input actual
   const handleClear = () => {
     if (step === 1) {
-      setLegajo("");
+      setLegajo(""); // Limpiar legajo
     } else {
-      setPassword("");
+      setPassword(""); // Limpiar contraseña
     }
   };
 
@@ -66,68 +73,44 @@ const SistemaIngreso = ({ setIsIngreso, setIsLogged }) => {
         <h1 className="text-3xl font-bold text-center mb-6">Sistema T5</h1>
         <h2 className="text-lg text-gray-400 text-center mb-4">{mensaje}</h2>
 
-        {step === 1 ? (
-          <div className="mb-6">
-            <p className="text-lg text-gray-300 text-center mb-2">
-              Ingrese su legajo:
-            </p>
-            <div className="text-2xl font-mono text-center bg-gray-800 p-4 rounded-lg">
-              {legajo || "---"}
-            </div>
-          </div>
-        ) : (
-          <div className="mb-6">
-            <p className="text-lg text-gray-300 text-center mb-2">
-              Ingrese su contraseña:
-            </p>
-            <div className="text-2xl font-mono text-center bg-gray-800 p-4 rounded-lg">
-              {"*".repeat(password.length) || "---"}
-            </div>
-          </div>
-        )}
+        {/* Mostrar el mensaje correspondiente según el paso actual */}
+        <p className="text-lg text-gray-300 text-center mb-2">
+          {step === 1 ? "Ingrese su legajo:" : "Ingrese su contraseña:"}
+        </p>
 
-        {/* Teclado numérico */}
+        {/* Mostrar el valor del legajo o contraseña */}
+        <div className="text-2xl font-mono text-center bg-gray-800 p-4 rounded-lg mb-6">
+          {step === 1 ? legajo || "---" : "*".repeat(password.length) || "---"}
+        </div>
+
+        {/* Contenedor de los botones numéricos */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
             <button
               key={num}
               onClick={() => handleButtonClick(num.toString())}
-              className="bg-gray-700 text-white text-2xl font-bold py-4 rounded-lg transition-transform transform hover:scale-105 active:scale-95"
+              className="bg-gray-700 text-white text-2xl font-bold py-4 rounded-lg hover:scale-105 active:scale-95"
             >
               {num}
             </button>
           ))}
         </div>
 
+        {/* Controles del sistema: Borrar, Confirmar y Limpiar */}
         <div className="flex justify-between">
-          {/* Botón para retroceder */}
-          <button
-            onClick={handleBackspace}
-            className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none transition-colors"
-          >
+          <button onClick={handleBackspace} className="bg-red-600 text-white py-2 px-4 rounded-lg">
             ⌫ Borrar
           </button>
-          {/* Botón para enviar legajo o contraseña */}
           {step === 1 ? (
-            <button
-              onClick={handleLegajoSubmit}
-              className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none transition-colors"
-            >
+            <button onClick={handleLegajoSubmit} className="bg-green-600 text-white py-2 px-4 rounded-lg">
               Confirmar Legajo
             </button>
           ) : (
-            <button
-              onClick={handlePasswordSubmit}
-              className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none transition-colors"
-            >
+            <button onClick={handlePasswordSubmit} className="bg-green-600 text-white py-2 px-4 rounded-lg">
               Confirmar Contraseña
             </button>
           )}
-          {/* Botón para limpiar */}
-          <button
-            onClick={handleClear}
-            className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 focus:outline-none transition-colors"
-          >
+          <button onClick={handleClear} className="bg-yellow-500 text-white py-2 px-4 rounded-lg">
             Limpiar
           </button>
         </div>

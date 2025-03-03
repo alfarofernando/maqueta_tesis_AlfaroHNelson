@@ -1,13 +1,70 @@
-// dummy_reports.js
+import croto01 from "../assets/croto01.jpg";
+import croto02 from "../assets/croto02.avif";
+import croto03 from "../assets/croto03.jpg";
+import croto04 from "../assets/croto04.jpg";
+import croto05 from "../assets/croto05.jpg";
+
 const dummyReports = [
   {
-    fecha: "28/09/2024",
-    hora: "HORA 14:00 PM",
-    sucursal: "SUC.G.LAFE",
-    marcador: "MARCADOR 1",
-    sexo: "NN MASCULINO",
+    fecha: "15/03/2025",
+    hora: "09:45 AM",
+    sucursal: "LAFERRERE01",
+    nivel: 3,
     descripcion:
-      "ESTATURA = 1.85 MTS - CAUCASICO - CABELLO CORTO - PERMANECE EN LA FILA - SACA NUMERO DE ATENCION A CLIENTE Y NO OPERA - PERMANECE EN LOBBY DE ATENCION AL CLIENTE - SE RETIRA LUEGO QUE UN CLIENTE HACE UNA EXTRACCION - SE ESTACIONA EN ZONA BANCARIA, FILMA Y OBTIENE IMAGENES A DISCRECION - LA TEMPERATURA ES DE 32º POR LO QUE LLEVAR PUESTA UNA CAMPERA SIGNIFICARIA QUE PODRIA ESTAR OCULTANDO ALGO, PODRIA CONSIDERARSE ARMADO Y PELIGROSO.",
+      "Alerta de alta prioridad debido a un incidente en la sucursal.",
+    imagen: croto01, // Usar la ruta de la imagen directamente
+    direccion: "Av. Figueroa Alcorta 2500, Laferrere",
+    lapsoMensual: 5,
+    lapsoSemanal: 2,
+    lapsoDiario: 1,
+  },
+  {
+    fecha: "10/02/2025",
+    hora: "13:20 PM",
+    sucursal: "CATAN03",
+    nivel: 3,
+    descripcion: "Reporte de incendio en la sucursal.",
+    imagen: croto02, // Usar la ruta de la imagen directamente
+    direccion: "Av. Juan Manuel de Rosas 1500, Catan",
+    lapsoMensual: 5,
+    lapsoSemanal: 2,
+    lapsoDiario: 1,
+  },
+  {
+    fecha: "15/03/2025",
+    hora: "09:45 AM",
+    sucursal: "LAFERRERE01",
+    nivel: 2,
+    descripcion: "Alerta de seguridad en la sucursal.",
+    imagen: croto03, // Usar la ruta de la imagen directamente
+    direccion: "Av. Figueroa Alcorta 2500, Laferrere",
+    lapsoMensual: 5,
+    lapsoSemanal: 2,
+    lapsoDiario: 1,
+  },
+  {
+    fecha: "22/01/2025",
+    hora: "17:50 PM",
+    sucursal: "MADERO02",
+    nivel: 3,
+    descripcion: "Alerta de robo reportado en la sucursal.",
+    imagen: croto05, // Usar la ruta de la imagen directamente
+    direccion: "Av. Madero 900, Buenos Aires",
+    lapsoMensual: 5,
+    lapsoSemanal: 2,
+    lapsoDiario: 1,
+  },
+  {
+    fecha: "22/01/2025",
+    hora: "17:50 PM",
+    sucursal: "MADERO02",
+    nivel: 1,
+    descripcion: "Alerta de robo reportado en la sucursal.",
+    imagen: croto04, // Usar la ruta de la imagen directamente
+    direccion: "Av. Madero 900, Buenos Aires",
+    lapsoMensual: 5,
+    lapsoSemanal: 2,
+    lapsoDiario: 1,
   },
 ];
 

@@ -1,0 +1,39 @@
+# Node.js dependencies
+/node_modules
+/.turbo
+/.yarn
+.pnp.*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Production build
+/dist
+/out
+/.next
+.vercel
+
+# Logs and debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor and system files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Git temporary files
+.git/
+.git-*

@@ -1,8 +1,6 @@
 // dummy_data.js
 export const usuarios = [
-  { legajo: "2222", password: "2222", nombre: "Leandro Alfaro" },
-  { legajo: "3333", password: "3333", nombre: "Juan Pérez" },
-  { legajo: "1111", password: "1111", nombre: "Alfaro Fernando" },
+  { legajo: "192581", password: "192581", nombre: "Nelson Alfaro" },
   // Agrega más usuarios si es necesario
 ];
 
