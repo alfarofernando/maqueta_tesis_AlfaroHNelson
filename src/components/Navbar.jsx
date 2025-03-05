@@ -22,12 +22,6 @@ const PanelPrincipal = () => {
           >
             Alertas
           </button>
-          <button
-            onClick={() => navigate("/reportes")}
-            className="text-white font-bold px-6 py-2 bg-purple-500 hover:bg-purple-600 transition-all duration-300 ease-in-out rounded-full shadow-lg hover:scale-105 focus:outline-none"
-          >
-            Reportes
-          </button>
         </div>
 
         {/* Si está logueado, mostrar información del usuario y el botón de logout */}
